@@ -1,8 +1,8 @@
-defmodule Wabanex.Users.Get do
+defmodule Wabanex.Students.Get do
   @moduledoc false
 
   alias Ecto.UUID
-  alias Wabanex.{Repo, User}
+  alias Wabanex.{Repo, Student}
 
   def call(id) do
     id
@@ -11,9 +11,9 @@ defmodule Wabanex.Users.Get do
   end
 
   defp handle_result({:ok, uuid}) do
-    case Repo.get!(User, uuid) do
-      nil -> {:error, "User not found"}
-      user -> {:ok, user}
+    case Repo.get!(Student, uuid) do
+      nil -> {:error, "Student not found"}
+      student -> {:ok, student}
     end
   end
 

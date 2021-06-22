@@ -1,22 +1,23 @@
-defmodule Wabanex.User do
+defmodule Wabanex.Instructor do
   @moduledoc false
 
   use Ecto.Schema
 
   import Ecto.Changeset
-  alias Ecto.Changeset
 
-#  alias Wabanex.Class
+  alias Ecto.Changeset
+  alias Wabanex.Student
 
   @primary_key {:id, :binary_id, autogenerate: true}
-  @fields [:name, :email, :password]
+  @fields [:cref, :name, :email, :password]
 
-  schema "users" do
+  schema "instructors" do
+    field :cref, :string
     field :name, :string
     field :email, :string
     field :password, :string, virtual: true
     field :password_hash, :string
-    #belongs_to :class, Class
+    has_many :students, Student
 
     timestamps()
   end
@@ -24,6 +25,8 @@ defmodule Wabanex.User do
   def changeset(params) do
     %__MODULE__{}
     |> cast(params, @fields)
+    |> validate_required(@fields)
+    |> validate_length(:name, min: 2)
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 8)
     |> unique_constraint([:email])
