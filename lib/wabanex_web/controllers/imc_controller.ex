@@ -14,7 +14,7 @@ defmodule WabanexWeb.ImcController do
     |> return_response(conn, :ok)
   end
 
-  defp hanlde_result({:error, reason}, conn) do
+  defp handle_result({:error, reason}, conn) do
     %{result: reason}
     |> return_response(conn, :bad_request)
   end
