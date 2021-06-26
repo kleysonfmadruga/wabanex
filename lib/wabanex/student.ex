@@ -6,9 +6,10 @@ defmodule Wabanex.Student do
   import Ecto.Changeset
 
   alias Ecto.Changeset
-  alias Wabanex.Instructor
+  alias Wabanex.{Instructor, Training}
 
   @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
   @fields [:name, :email, :password]
 
   schema "students" do
@@ -16,7 +17,9 @@ defmodule Wabanex.Student do
     field :email, :string
     field :password, :string, virtual: true
     field :password_hash, :string
+
     belongs_to :instructor, Instructor
+    has_many :trainings, Training
 
     timestamps()
   end
