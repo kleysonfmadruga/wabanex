@@ -9,6 +9,7 @@ defmodule Wabanex.Instructor do
   alias Wabanex.Student
 
   @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
   @fields [:cref, :name, :email, :password]
 
   schema "instructors" do
@@ -17,6 +18,7 @@ defmodule Wabanex.Instructor do
     field :email, :string
     field :password, :string, virtual: true
     field :password_hash, :string
+
     has_many :students, Student
 
     timestamps()
@@ -29,6 +31,7 @@ defmodule Wabanex.Instructor do
     |> validate_length(:name, min: 2)
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 8)
+    |> validate_length(:cref, min: 8)
     |> unique_constraint([:email])
     |> hash_plain_password()
   end
