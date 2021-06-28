@@ -30,5 +30,14 @@ defmodule Wabanex.Students.GetTest do
 
       assert {:error, "Invalid Uuid"} = student
     end
+
+    test "when a valid but non-existent id is given, returns an error" do
+      assert_raise(
+        Ecto.NoResultsError,
+        fn ->
+          "57d34753-6cce-4e93-9a4a-b21727486539" |> Get.call()
+        end
+      )
+    end
   end
 end
