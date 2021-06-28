@@ -35,5 +35,23 @@ defmodule Wabanex.Trainings.CreateTest do
         }
       } = response
     end
+
+    test "when a student id is not given, returns an error" do
+      exercise_params = %{name: "Treino de braço", protocol_description: "padrão", repetitions: "3x12", youtube_video_url: "www.youtube.com.br"}
+
+      training_params = %{start_date: ~D[2021-06-28], end_date: ~D[2021-07-10], exercises: [exercise_params]}
+
+      response = training_params |> Trainings.Create.call()
+
+      assert {:error,
+        %Ecto.Changeset{
+          valid?: false,
+          changes: _changes,
+          errors: [
+            student_id: {"can't be blank", [validation: :required]}
+          ]
+        }
+      } = response
+    end
   end
 end
