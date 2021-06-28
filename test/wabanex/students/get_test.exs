@@ -24,5 +24,11 @@ defmodule Wabanex.Students.GetTest do
               }
             } = student
     end
+
+    test "when an invalid id is given, return an error" do
+      student = "2578458736583" |> Get.call()
+
+      assert {:error, "Invalid Uuid"} = student
+    end
   end
 end
