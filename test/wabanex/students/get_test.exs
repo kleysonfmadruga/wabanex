@@ -11,7 +11,7 @@ defmodule Wabanex.Students.GetTest do
 
       {:ok, %{id: student_id}} = student_params |> Create.call()
 
-      student = student_id |> Get.call()
+      response = student_id |> Get.call()
 
       assert {:ok,
               %Wabanex.Student{
@@ -22,13 +22,13 @@ defmodule Wabanex.Students.GetTest do
                 password: nil,
                 password_hash: _hash
               }
-            } = student
+            } = response
     end
 
     test "when an invalid id is given, return an error" do
-      student = "2578458736583" |> Get.call()
+      response = "2578458736583" |> Get.call()
 
-      assert {:error, "Invalid Uuid"} = student
+      assert {:error, "Invalid Uuid"} = response
     end
 
     test "when a valid but non-existent id is given, returns an error" do
